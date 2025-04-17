@@ -49,6 +49,7 @@
 
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head"></head>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -324,6 +325,7 @@
         }
     </style>
     <title th:text="${title}">동기부여</title>
+
 </head>
 <body>
 <header>
