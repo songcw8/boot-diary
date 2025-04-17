@@ -30,3 +30,7 @@ supabase:
   url: ${SUPABASE_URL}
   bucket-name: ${SUPABASE_BUCKET_NAME}
   access-key: ${SUPABASE_ACCESS_KEY}
+#AI
+together:
+  api-key: ${TOGETHER_API_KEY}
+  model: ${TOGETHER_MODEL}

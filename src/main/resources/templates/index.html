@@ -1,5 +1,53 @@
+<!--<!doctype html>-->
+<!--&lt;!&ndash; x ml ns th ~ &ndash;&gt;-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport"-->
+<!--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <style>-->
+<!--        /*@font-face {*/-->
+<!--        /*    font-family: 'SBAggroB';*/-->
+<!--        /*    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');*/-->
+<!--        /*    font-weight: normal;*/-->
+<!--        /*    font-style: normal;*/-->
+<!--        /*}*/-->
+<!--        @font-face {-->
+<!--            font-family: 'MyCustomFont';-->
+<!--            src: url('/fonts/a태백산맥.ttf') format('truetype');-->
+<!--            font-weight: normal;-->
+<!--            font-style: normal;-->
+<!--        }-->
+
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        body {-->
+<!--            /*font-family: SBAggroB, sans-serif;*/-->
+<!--            font-family: 'MyCustomFont', sans-serif;-->
+<!--        }-->
+<!--    </style>-->
+<!--    <title th:text="${title}">기본 제목</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header style="padding: 1rem;">-->
+<!--    <h1 style="padding-bottom: 1rem" th:text="${message}">메시지</h1>-->
+<!--    <nav>-->
+<!--        <a th:href="@{/article}">글 목록</a>-->
+<!--        <a th:href="@{/article/new}">글 작성</a>-->
+<!--    </nav>-->
+<!--</header>-->
+<!--<section style="margin: auto; padding: 1rem; max-width: 768px;">-->
+<!--    <figure style="display: flex;">-->
+<!--        <img style="width: 100%; aspect-ratio: 1;" th:src="${frontImage}" alt="대문 이미지">-->
+<!--    </figure>-->
+<!--</section>-->
+<!--</body>-->
+<!--</html>-->
+
 <!doctype html>
-<!-- x ml ns th ~ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -7,12 +55,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
-        /*@font-face {*/
-        /*    font-family: 'SBAggroB';*/
-        /*    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');*/
-        /*    font-weight: normal;*/
-        /*    font-style: normal;*/
-        /*}*/
         @font-face {
             font-family: 'MyCustomFont';
             src: url('/fonts/a태백산맥.ttf') format('truetype');
@@ -23,26 +65,288 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
         body {
-            /*font-family: SBAggroB, sans-serif;*/
             font-family: 'MyCustomFont', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 10px 10px;
+            z-index: 0;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 50px 50px;
+            }
+        }
+
+        h1 {
+            padding-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        h1:hover {
+            transform: scale(1.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        .main-section {
+            margin: auto;
+            padding: 2rem;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .image-frame {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+            transform: rotateX(5deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotateX(5deg);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                transform: translateY(-15px) rotateX(5deg);
+                box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                transform: translateY(0px) rotateX(5deg);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.05);
+        }
+
+        .quote-container {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeUp 1s forwards 0.5s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            text-align: right;
+        }
+
+        .cta-button {
+            display: block;
+            width: 80%;
+            max-width: 300px;
+            margin: 2rem auto;
+            padding: 1rem 0;
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(45deg, #ff8e8e, #ff6b6b);
+            transition: width 0.5s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .cta-button:hover::before {
+            width: 100%;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .main-section {
+                padding: 1rem;
+            }
+
+            .quote {
+                font-size: 1.2rem;
+            }
         }
     </style>
-    <title th:text="${title}">기본 제목</title>
+    <title th:text="${title}">동기부여</title>
 </head>
 <body>
-<header style="padding: 1rem;">
-    <h1 style="padding-bottom: 1rem" th:text="${message}">메시지</h1>
+<header>
+    <h1 th:text="${message}">당신의 잠재력을 깨워보세요!</h1>
     <nav>
-        <a th:href="@{/article}">글 목록</a>
-        <a th:href="@{/article/new}">글 작성</a>
+        <a th:href="@{/article}">나의 목표 목록</a>
+        <a th:href="@{/article/new}">나의 목표 작성</a>
     </nav>
 </header>
-<section style="margin: auto; padding: 1rem; max-width: 768px;">
-    <figure style="display: flex;">
-        <img style="width: 100%; aspect-ratio: 1;" th:src="${frontImage}" alt="대문 이미지">
-    </figure>
+
+<section class="main-section">
+    <div class="quote-container">
+        <p class="quote">“영원히 살 것처럼 배우고, 내일 죽을 것처럼 살아라.”</p>
+        <p class="quote-author">-마하트마 간디-</p>
+    </div>
+
+    <div class="image-container">
+        <div class="image-frame">
+            <img class="main-image" th:src="${frontImage}" alt="동기부여 이미지" src="/api/placeholder/800/450" />
+        </div>
+    </div>
+
+    <a href="#" class="cta-button">지금 시작하기</a>
 </section>
 </body>
 </html>

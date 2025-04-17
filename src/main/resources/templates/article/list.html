@@ -1,5 +1,71 @@
+<!--<!doctype html>-->
+<!--&lt;!&ndash; x ml ns th ~ &ndash;&gt;-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport"-->
+<!--          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <style>-->
+<!--        @font-face {-->
+<!--            font-family: 'MyCustomFont';-->
+<!--            src: url('/fonts/a태백산맥.ttf') format('truetype');-->
+<!--            font-weight: normal;-->
+<!--            font-style: normal;-->
+<!--        }-->
+<!--        * {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        body {-->
+<!--            font-family: 'MyCustomFont', sans-serif;-->
+<!--        }-->
+<!--        article {-->
+<!--            display: flex;-->
+<!--        }-->
+<!--        body > section {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 1rem;-->
+<!--        }-->
+<!--        body > section > article {-->
+<!--            padding: 0.5rem;-->
+<!--            border: 1px solid gray;-->
+<!--            border-radius: 0.5rem;-->
+<!--        }-->
+<!--    </style>-->
+<!--    <title th:text="${title}"></title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header style="padding: 1rem;">-->
+<!--    <h1 style="padding-bottom: 1rem" th:text="${message}">메시지</h1>-->
+<!--    <nav>-->
+<!--        <a th:href="@{/}">홈</a>-->
+<!--        <a th:href="@{/article/new}">글 작성</a>-->
+<!--    </nav>-->
+<!--</header>-->
+<!--&lt;!&ndash;    <section th:text="${list}">&ndash;&gt;-->
+<!--&lt;!&ndash;    </section>&ndash;&gt;-->
+<!--<section style="margin: auto; padding: 1rem; max-width: 768px;">-->
+<!--    <article th:each="el : ${list}">-->
+<!--        <section th:if="${el.filename}">-->
+<!--            &lt;!&ndash;                <img style="width: 4rem;" th:src="${el.filename}" alt="사진">&ndash;&gt;-->
+<!--            <img style="width: 4rem;" th:src="@{/file/{filename}(filename=${el.filename})}" alt="사진">-->
+<!--        </section>-->
+<!--        <section>-->
+<!--            <h3 th:text="${el.title}"></h3>-->
+<!--            <p th:text="${el.content}"></p>-->
+<!--            <a th:href="@{/article/edit/{uuid}(uuid=${el.uuid})}">수정</a>-->
+<!--            <form th:action="@{/article/delete/{uuid}(uuid=${el.uuid})}" method="post">-->
+<!--                <button>삭제</button>-->
+<!--            </form>-->
+<!--        </section>-->
+<!--    </article>-->
+<!--</section>-->
+<!--</body>-->
+<!--</html>-->
+
 <!doctype html>
-<!-- x ml ns th ~ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -13,47 +79,343 @@
             font-weight: normal;
             font-style: normal;
         }
+
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
         body {
             font-family: 'MyCustomFont', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: white;
+            min-height: 100vh;
         }
-        article {
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 10px 10px;
+            z-index: 0;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 50px 50px;
+            }
+        }
+
+        h1 {
+            padding-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        h1:hover {
+            transform: scale(1.05);
+        }
+
+        nav {
             display: flex;
+            justify-content: center;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
         }
-        body > section {
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        .list-section {
+            margin: auto;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .article-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
         }
-        body > section > article {
-            padding: 0.5rem;
-            border: 1px solid gray;
-            border-radius: 0.5rem;
+
+        .article-card {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff6b6b, #ff8e8e);
+        }
+
+        .article-image {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .article-image img {
+            width: 6rem;
+            height: 6rem;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            flex: 1;
+            padding: 1.5rem 1.5rem 1.5rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .article-text {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .article-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .edit-link {
+            text-decoration: none;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .edit-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .delete-form {
+            display: inline;
+        }
+
+        .delete-button {
+            background-color: rgba(255, 107, 107, 0.7);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: 'MyCustomFont', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .delete-button:hover {
+            background-color: rgba(255, 107, 107, 0.9);
+        }
+
+        .empty-list {
+            text-align: center;
+            padding: 3rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .empty-message {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .create-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .create-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .list-section {
+                padding: 1rem;
+            }
+
+            .article-card {
+                flex-direction: column;
+            }
+
+            .article-image {
+                width: 100%;
+                padding: 1rem 1rem 0 1rem;
+            }
+
+            .article-image img {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+            }
+
+            .article-content {
+                padding: 1rem;
+            }
         }
     </style>
-    <title th:text="${title}"></title>
+    <title th:text="${title}">동기부여 글 목록</title>
 </head>
 <body>
-<header style="padding: 1rem;">
-    <h1 style="padding-bottom: 1rem" th:text="${message}">메시지</h1>
+<header>
+    <h1 th:text="${message}">당신의 목표와 동기부여</h1>
     <nav>
         <a th:href="@{/}">홈</a>
         <a th:href="@{/article/new}">글 작성</a>
     </nav>
 </header>
-<section style="margin: auto; padding: 1rem; max-width: 768px;">
-    <article th:each="el : ${list}">
-        <section th:if="${el.filename}">
-            <img style="width: 4rem;" th:src="${el.filename}" alt="사진">
-        </section>
-        <section>
-            <h3 th:text="${el.title}"></h3>
-            <p th:text="${el.content}"></p>
-        </section>
-    </article>
+
+<section class="list-section">
+    <div class="article-list">
+        <article class="article-card" th:each="el : ${list}">
+            <div class="article-image" th:if="${el.filename}">
+                <img th:src="@{/file/{filename}(filename=${el.filename})}" alt="사진">
+            </div>
+            <div class="article-content">
+                <h3 class="article-title" th:text="${el.title}">글 제목</h3>
+                <p class="article-text" th:text="${el.content}">글 내용</p>
+                <div class="article-actions">
+                    <a class="edit-link" th:href="@{/article/edit/{uuid}(uuid=${el.uuid})}">수정</a>
+                    <form class="delete-form" th:action="@{/article/delete/{uuid}(uuid=${el.uuid})}" method="post">
+                        <button class="delete-button">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </article>
+
+        <!-- 글이 없을 경우 표시할 내용 -->
+        <div class="empty-list" th:if="${#lists.isEmpty(list)}">
+            <p class="empty-message">아직 작성된 글이 없습니다.</p>
+            <a class="create-button" th:href="@{/article/new}">첫 글 작성하기</a>
+        </div>
+    </div>
 </section>
 </body>
 </html>
