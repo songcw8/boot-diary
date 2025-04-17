@@ -21,7 +21,7 @@ public class Article {
     private String content;
 
     private String filename;
-    // DB 들어갈 때는 UTC로 하자
+    // DB 들어갈 때는 UTC로 하자.
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC);
 }
