@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: boot-diary
+  profiles:
+    active: dev
