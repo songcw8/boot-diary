@@ -3,6 +3,7 @@ package org.example.bootdiary.controller;
 import org.example.bootdiary.model.entity.Article;
 import org.example.bootdiary.model.form.ArticleForm;
 import org.example.bootdiary.service.ArticleService;
+import org.example.bootdiary.service.FileService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final FileService fileService;
 
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, FileService fileService) {
         this.articleService = articleService;
+        this.fileService = fileService;
     }
 
     @GetMapping
@@ -42,7 +45,10 @@ public class ArticleController {
         article.setTitle(form.title());
         article.setContent(form.content());
         try {
-            // TODO : file
+            if (!form.file().isEmpty()) {
+                String filename = fileService.upload(form.file());
+                article.setFilename(filename);
+            }
             articleService.save(article);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());

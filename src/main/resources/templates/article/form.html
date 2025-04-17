@@ -45,7 +45,9 @@
             내용 : <textarea th:field="*{content}" required></textarea>
         </label>
         <label>
-            파일 : <input type="file" th:field="*{file}" required>
+            <!-- 파일 : <input type="file" th:field="*{file}" required> -->
+            파일 : <input type="file" th:field="*{file}" accept="image/*">
+            <!-- 꼭 필수는 아니지만 이미지만 업로드할 수 있게 HTML 단에서 제약 -->
         </label>
         <!-- TIL : lint -->
         <button th:unless="${edit}">작성</button>
