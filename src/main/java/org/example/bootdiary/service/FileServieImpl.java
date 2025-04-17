@@ -26,12 +26,20 @@ public class FileServieImpl implements FileService {
 
     @Override
     public String upload(MultipartFile file) throws Exception {
-        String uuid = UUID.randomUUID().toString();
+        if(file.getOriginalFilename().isEmpty() && file.getSize() == 0){
+            // 이름도 없고, 내용도 없다
+            return "";
+        }
+        if (file.getSize() == 0){
+            throw new BadRequestException("내용이 없는 파일");
+        }
+
         String contentType = file.getContentType();
-        boolean isImage = contentType.contains("image");
+        boolean isImage = contentType.startsWith("image");
         if (!isImage) {
             throw new BadRequestException("첨부한 파일이 이미지가 아닙니다.");
         }
+        String uuid = UUID.randomUUID().toString();
 
         String extension = file.getContentType().split("/")[1];
         String boundary = "Boundary-%s".formatted(uuid);
