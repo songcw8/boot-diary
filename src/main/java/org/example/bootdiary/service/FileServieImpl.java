@@ -1,5 +1,7 @@
 package org.example.bootdiary.service;
 
+import org.apache.coyote.BadRequestException;
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +27,12 @@ public class FileServieImpl implements FileService {
     @Override
     public String upload(MultipartFile file) throws Exception {
         String uuid = UUID.randomUUID().toString();
+        String contentType = file.getContentType();
+        boolean isImage = contentType.contains("image");
+        if (!isImage) {
+            throw new BadRequestException("첨부한 파일이 이미지가 아닙니다.");
+        }
+
         String extension = file.getContentType().split("/")[1];
         String boundary = "Boundary-%s".formatted(uuid);
         String filename = "%s.%s".formatted(uuid, extension);
