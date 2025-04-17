@@ -57,7 +57,12 @@ public class ArticleController {
             article.setContent(form.content());
             article.setFilename(filename);
             articleService.save(article);
-            String result = aIService.answer(form.title() + "에 대한 동기부여 명언을 찾아서 말해줘고 누가 말했는지도 말해줘. 마크다운 쓰지 않은 평문으로");
+            String result = aIService.answer(form.title() + """
+                    사용자가 아래에 입력한 텍스트를 참고하여 그에 어울리는 동기부여 명언 하나를 선정해줘. 명언은 사람의 감정을 북돋을 수 있고, 상황에 맞는 힘이 되어야 해. 명언은 반드시 실제 인물의 말이어야 하며, 다음 형식을 따라줘:
+                    명언 -발언자
+                    명언은 마크다운이 아니라 일반 평문으로 출력하고, 다른 설명이나 해석은 덧붙이지 마.
+                    
+                    """);
             log.info(result);
             redirectAttributes.addFlashAttribute("result", result);
         } catch (BadFileException e) {
